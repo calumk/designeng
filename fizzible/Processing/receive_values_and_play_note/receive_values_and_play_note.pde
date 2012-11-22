@@ -18,7 +18,7 @@ int[] currentValues= {
 
 //change these to reflect the maximum values you will get
 int maxValue1=255;
-int maxValue2=55;
+int maxValue2=255;
 
 boolean newValues=false;
 
