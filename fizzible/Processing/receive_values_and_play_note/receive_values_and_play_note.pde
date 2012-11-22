@@ -1,4 +1,5 @@
-// added code to play sine note based on the first element in the current values array
+// added code to play and pan sine note based on the first two elements
+// in the current values array
 // set the variable maxValue to scale the pitch well
 
 
@@ -15,8 +16,9 @@ int[] currentValues= {
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-//change this to reflect the maximum value you will send
-int maxValue=255;
+//change these to reflect the maximum values you will get
+int maxValue1=255;
+int maxValue2=55;
 
 boolean newValues=false;
 
@@ -32,6 +34,7 @@ void setup()
   sine.portamento(200);
   // add the oscillator to the line out
   out.addSignal(sine);
+
   String portName = Serial.list()[0];
   myPort = new Serial(this, portName, 9600);
   myPort.bufferUntil('\n');
@@ -42,24 +45,25 @@ void draw()
   background(0);
   stroke(255);
   // draw the waveforms
-  for(int i = 0; i < out.bufferSize() - 1; i++)
+  for (int i = 0; i < out.bufferSize() - 1; i++)
   {
     float x1 = map(i, 0, out.bufferSize(), 0, width);
     float x2 = map(i+1, 0, out.bufferSize(), 0, width);
     line(x1, 50 + out.left.get(i)*50, x2, 50 + out.left.get(i+1)*50);
     line(x1, 150 + out.right.get(i)*50, x2, 150 + out.right.get(i+1)*50);
   }
-  if (newValues){
-   println(currentValues);
-   // with portamento on the frequency will change smoothly
-   float freq = map(abs(currentValues[0]), 0, maxValue, 60, 1500);
-  sine.setFreq(freq);
-  // pan always changes smoothly to avoid crackles getting into the signal
-  // note that we could call setPan on out, instead of on sine
-  // this would sound the same, but the waveforms in out would not reflect the panning
-  //float pan = map(mouseX, 0, width, -1, 1);
-  //sine.setPan(pan);
-  newValues=false;
+
+
+  if (newValues) {
+    println(currentValues);
+    // with portamento on the frequency will change smoothly
+    float freq = map(abs(currentValues[0]), 0, maxValue1, 60, 1500);
+    sine.setFreq(freq);
+    //we can also pan the sound
+    float pan = map(abs(currentValues[1]), 0, maxValue2, -1, 1);
+    sine.setPan(pan);
+
+    newValues=false;
   }
 }
 
@@ -67,7 +71,7 @@ void stop()
 {
   out.close();
   minim.stop();
-  
+
   super.stop();
 }
 
@@ -82,5 +86,4 @@ void serialEvent(Serial myPort) {
     }
   }
 }
-
 
