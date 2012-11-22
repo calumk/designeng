@@ -55,11 +55,11 @@ void printOutValues(){
    Serial.print(","); 
    Serial.print(sample.value2);
    Serial.print(",");
-  Serial.print(sample.value3);
+   Serial.print(sample.value3);
    Serial.print(",");  
    Serial.print(sample.value4);
    Serial.print(","); 
-  Serial.print(sample.value5);
+   Serial.print(sample.value5);
    Serial.print(","); 
    Serial.print(sample.value6);
    Serial.print(","); 
