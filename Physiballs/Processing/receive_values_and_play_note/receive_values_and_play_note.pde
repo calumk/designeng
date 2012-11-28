@@ -1,8 +1,6 @@
 // added code to play and pan sine note based on the first two elements
 // in the current values array
 // set the variable maxValue to scale the pitch well
-
-
 import ddf.minim.*;
 import ddf.minim.signals.*;
 import processing.serial.*;
@@ -12,18 +10,13 @@ AudioOutput out;
 SineWave sine;
 
 Serial myPort;  // Create object from Serial class
-int[] currentValues= {
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-};
-
+int[] currentValues= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+boolean newValues=false;
 //change these to reflect the maximum values you will get
 int maxValue1=255;
 int maxValue2=255;
 
-boolean newValues=false;
-
-void setup() 
-{
+void setup(){
   size(512, 200, P2D);
   minim = new Minim(this);
   // get a line out from Minim, default bufferSize is 1024, default sample rate is 44100, bit depth is 16
@@ -40,19 +33,16 @@ void setup()
   myPort.bufferUntil('\n');
 }
 
-void draw()
-{
+void draw(){
   background(0);
   stroke(255);
   // draw the waveforms
-  for (int i = 0; i < out.bufferSize() - 1; i++)
-  {
+  for (int i = 0; i < out.bufferSize() - 1; i++){
     float x1 = map(i, 0, out.bufferSize(), 0, width);
     float x2 = map(i+1, 0, out.bufferSize(), 0, width);
     line(x1, 50 + out.left.get(i)*50, x2, 50 + out.left.get(i+1)*50);
     line(x1, 150 + out.right.get(i)*50, x2, 150 + out.right.get(i+1)*50);
   }
-
 
   if (newValues) {
     println(currentValues);
@@ -62,7 +52,6 @@ void draw()
     //we can also pan the sound
     float pan = map(abs(currentValues[1]), 0, maxValue2, -1, 1);
     sine.setPan(pan);
-
     newValues=false;
   }
 }
@@ -71,7 +60,6 @@ void stop()
 {
   out.close();
   minim.stop();
-
   super.stop();
 }
 
