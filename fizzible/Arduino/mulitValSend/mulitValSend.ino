@@ -28,7 +28,7 @@ typedef struct {  // Message data Structure, this must match Tx
   int value3;
   int value4;
   int value5;
-  int  value6;
+  int value6;
   int value7;
   int value8;
   int value9;
@@ -47,7 +47,7 @@ void loop()
   while (!rf12_canSend())  // is the driver ready to send?
     rf12_recvDone();       //no so service the driver 
   Serial.print(micros()); 
-  rf12_sendStart(rf12_hdr, &sample, sizeof sample); 
+  rf12_sendStart(rf12_hdr, &sample, sizeof(sample)); 
   rf12_sendWait(RF12_NORMAL_SENDWAIT);  // wait for send completion
   Serial.print("  ");
   Serial.print(micros());
