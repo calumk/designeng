@@ -1,8 +1,6 @@
 /*
  * RFM12B wireless demo - struct receiver - no ack
- *
  */
-
 
 #include <RF12.h>  //from jeelabs.org
 #include <Ports.h> 
@@ -21,7 +19,7 @@ void setup()
 }
 
 typedef struct {  // Message data Structure, this must match Tx
-   int   sampleNumber;	           
+  int sampleNumber;	           
   int value1;
   int value2;
   int value3;
@@ -37,7 +35,6 @@ Payload;
 Payload sample;         // declare an instance of type Payload named sample
 
 void loop() {
-
   if (rf12_recvDone() && rf12_crc == 0 && (rf12_hdr & RF12_HDR_CTL) == 0) 
   {
     sample = *(Payload*)rf12_data;            // Access the payload  
@@ -45,10 +42,7 @@ void loop() {
   }
 }
 
-
-
 void printOutValues(){
-
    Serial.print(sample.sampleNumber);
    Serial.print(",");
    Serial.print(sample.value1);

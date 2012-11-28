@@ -32,7 +32,6 @@ typedef struct {  // Message data Structure, this must match Tx
   int value7;
   int value8;
   int value9;
-
 } 
 Payload;
 
@@ -41,7 +40,6 @@ Payload sample;  // declare an instance of type Payload named sample
 
 void loop()
 {
-
   updateValues();
 
   while (!rf12_canSend())  // is the driver ready to send?
@@ -54,11 +52,8 @@ void loop()
   Serial.print("  ");
   Serial.println(micros());
 
-
-
   delay(1000);
 }
-
 
 void updateValues(){
   count=count+1;
@@ -72,8 +67,6 @@ void updateValues(){
   sample.value7=count+5;
   sample.value8=0;
   sample.value9=count+7;
-
-
 }
 
 
